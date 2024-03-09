@@ -1,5 +1,5 @@
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
-import { usersReducer } from "./reducer";
+import { groupsReducer } from "./reducer";
 import thunk from "redux-thunk";
 
 declare global {
@@ -13,7 +13,7 @@ export const composeEnhancers =
 
 const enhancer = composeEnhancers(applyMiddleware(thunk));
 
-const rootReducer = combineReducers({ groups: usersReducer });
+const rootReducer = combineReducers({ groups: groupsReducer });
 
 export const initStore = (initialState = {}) =>
   createStore(rootReducer, initialState, enhancer);

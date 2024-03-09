@@ -20,7 +20,7 @@ const initialState: IInitialState = {
   reqFailed: false,
 };
 
-export const usersReducer = (
+export const groupsReducer = (
   state = initialState,
   action: TGroupsActions
 ): IInitialState => {
