@@ -8,12 +8,14 @@ import {
 
 export interface IInitialState {
   groups: Group[];
+  colors: string[];
   reqInProccess: boolean;
   reqFailed: boolean;
 }
 
 const initialState: IInitialState = {
   groups: [],
+  colors: [],
   reqInProccess: false,
   reqFailed: false,
 };
@@ -31,11 +33,21 @@ export const usersReducer = (
       };
     }
     case GET_GROUPS_SUCCESS: {
+      const colorsArr: string[] = [];
+      action.groups.forEach((group) => {
+        if (group.avatar_color) {
+          colorsArr.push(group.avatar_color);
+        }
+      });
+      const uniqueArr = colorsArr.filter((value, index, array) => {
+        return array.indexOf(value) === index;
+      });
       return {
         ...state,
         reqInProccess: false,
         reqFailed: false,
         groups: action.groups,
+        colors: uniqueArr,
       };
     }
     case GET_GROUPS_FAILED: {

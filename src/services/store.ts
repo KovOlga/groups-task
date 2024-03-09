@@ -13,7 +13,7 @@ export const composeEnhancers =
 
 const enhancer = composeEnhancers(applyMiddleware(thunk));
 
-const rootReducer = combineReducers({ users: usersReducer });
+const rootReducer = combineReducers({ groups: usersReducer });
 
 export const initStore = (initialState = {}) =>
   createStore(rootReducer, initialState, enhancer);
