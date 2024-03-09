@@ -43,8 +43,8 @@ export const getGroups: AppThunk = () => {
   return function (dispatch: AppDispatch) {
     dispatch(getGroupsAction());
     return getGroupsList()
-      .then((users) => {
-        dispatch(getGroupsSuccessAction(users));
+      .then((groups) => {
+        dispatch(getGroupsSuccessAction(groups));
       })
       .catch(() => {
         dispatch(getGroupsFailedAction());
