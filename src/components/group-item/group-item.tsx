@@ -35,8 +35,8 @@ const GroupItem: FC<Group> = (item) => {
         indicator={
           item.friends &&
           item.friends?.length > 0 && (
-            <Button size="s" mode="secondary" onClick={onFriendsClick}>
-              {item.friends?.length}
+            <Button size="s" mode="tertiary" onClick={onFriendsClick}>
+              {`Друзей подписано: ${item.friends?.length}`}
             </Button>
           )
         }
