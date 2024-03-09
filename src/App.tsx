@@ -11,6 +11,7 @@ import {
 } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
 import GroupsList from "./components/groups-list/groups-list";
+import Filters from "./components/filters/filters";
 
 export default function App() {
   const platform = usePlatform();
@@ -24,7 +25,10 @@ export default function App() {
           <View activePanel="main">
             <Panel id="main">
               <PanelHeader>VKUI</PanelHeader>
-              <Group header={<Header mode="secondary">Groups:</Header>}>
+              <Group header={<Header mode="primary">Доступные фильтры</Header>}>
+                <Filters />
+              </Group>
+              <Group header={<Header mode="primary">Группы:</Header>}>
                 <GroupsList />
               </Group>
             </Panel>
