@@ -7,12 +7,25 @@ const GroupItem: FC<Group> = (item) => {
   const [isFriendsListVisible, setIsFriendsListVisible] =
     useState<boolean>(false);
   const onFriendsClick = () => {
-    console.log("friends");
+    setIsFriendsListVisible((prevState) => !prevState);
   };
   return (
     <CardGrid>
       <SimpleCell
-        before={<Avatar gradientColor={item.avatar_color} />}
+        before={
+          item.avatar_color ? (
+            <Avatar
+              gradientColor={"custom"}
+              style={{ backgroundColor: `${item.avatar_color}` }}
+            />
+          ) : (
+            <Avatar
+              gradientColor={"custom"}
+              style={{ backgroundColor: "inherit" }}
+              noBorder
+            />
+          )
+        }
         subtitle={`${item.members_count} подписчиков`}
         subhead={
           <Title style={{ color: "#d1deeb" }} level="1">
@@ -20,6 +33,7 @@ const GroupItem: FC<Group> = (item) => {
           </Title>
         }
         indicator={
+          item.friends &&
           item.friends?.length > 0 && (
             <Button size="s" mode="secondary" onClick={onFriendsClick}>
               {item.friends?.length}
@@ -31,7 +45,9 @@ const GroupItem: FC<Group> = (item) => {
           {item.closed ? "Закрытая" : "Открытая"}
         </Title>
       </SimpleCell>
-      {isFriendsListVisible && <FriendsList />}
+      {isFriendsListVisible && item.friends && (
+        <FriendsList friends={item.friends} />
+      )}
     </CardGrid>
   );
 };
