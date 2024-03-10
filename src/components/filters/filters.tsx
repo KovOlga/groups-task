@@ -1,29 +1,37 @@
 import { FormItem, FormLayoutGroup, NativeSelect } from "@vkontakte/vkui";
-import { FC } from "react";
+import { ChangeEvent, FC } from "react";
 import { useAppSelector } from "../../hooks/hooks";
 import { RootState } from "../../types";
 
 const Filters: FC = () => {
   const colors = useAppSelector((store: RootState) => store.groups.colors);
+  const onFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    console.log("valu", e.target.value);
+    console.log("name", e.target.id);
+  };
   return (
     <FormLayoutGroup mode="horizontal">
       <FormItem top="По типу приватности" htmlFor="privacy">
-        <NativeSelect id="privacy">
+        <NativeSelect onChange={onFilterChange} id="privacy">
           <option value="all">Все</option>
           <option value="closed">Закрытая</option>
           <option value="opened">Открытая</option>
         </NativeSelect>
       </FormItem>
       <FormItem top="По цвету аватарки" htmlFor="color">
-        <NativeSelect id="color">
+        <NativeSelect onChange={onFilterChange} id="color">
           <option value="any">Любой</option>
-          {colors.map((color) => {
-            return <option value="color">{color}</option>;
+          {colors.map((color, index) => {
+            return (
+              <option key={index} value={color}>
+                {color}
+              </option>
+            );
           })}
         </NativeSelect>
       </FormItem>
       <FormItem top="По наличию друзей в группе" htmlFor="friends">
-        <NativeSelect id="friends">
+        <NativeSelect onChange={onFilterChange} id="friends">
           <option value="all">Все</option>
           <option value="presence">Есть друзья в группе</option>
           <option value="absence">Нет друзей в группе</option>

@@ -8,6 +8,22 @@ const mockFetch = (): Promise<GetGroupsResponse> => {
     }, 1000);
   });
 };
+//==>
+
+const mockFetchFiltered = (filterRequest: any): Promise<GetGroupsResponse> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(backendFiltersResultSet(filterRequest));
+    }, 1000);
+  });
+};
+
+const backendFiltersResultSet = (filterRequest: any): GetGroupsResponse => {
+  if (filterRequest != null) {
+    return { result: 1, data: backendFiltersResultSet(filterRequest) };
+  }
+  return { result: 1, data: backendFiltersResultSet(filterRequest) };
+};
 
 const getResponse = async (req: GetGroupsResponse) => {
   if (!req.data) {
