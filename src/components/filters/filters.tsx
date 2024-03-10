@@ -2,12 +2,18 @@ import { FormItem, FormLayoutGroup, NativeSelect } from "@vkontakte/vkui";
 import { ChangeEvent, FC } from "react";
 import { useAppSelector } from "../../hooks/hooks";
 import { RootState } from "../../types";
+import { getGroups } from "../../services/actions";
 
 const Filters: FC = () => {
   const colors = useAppSelector((store: RootState) => store.groups.colors);
   const onFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
     console.log("valu", e.target.value);
     console.log("name", e.target.id);
+    // getGroups({
+    //   privacy: "all",
+    //   color: "any",
+    //   friends: "all",
+    // });
   };
   return (
     <FormLayoutGroup mode="horizontal">

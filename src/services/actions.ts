@@ -1,5 +1,5 @@
 import { AppDispatch, AppThunk } from "../types";
-import { Group } from "../types/data";
+import { Group, IFilterRequest } from "../types/data";
 import { getGroupsList } from "./api";
 
 export const GET_GROUPS_REQUEST = "GET_GROUPS_REQUEST";
@@ -39,10 +39,10 @@ export const getGroupsFailedAction = (): IGetGroupsFailedAction => ({
   type: GET_GROUPS_FAILED,
 });
 
-export const getGroups: AppThunk = () => {
+export const getGroups: AppThunk = (filterReq: IFilterRequest) => {
   return function (dispatch: AppDispatch) {
     dispatch(getGroupsAction());
-    return getGroupsList()
+    return getGroupsList(filterReq)
       .then((groups) => {
         dispatch(getGroupsSuccessAction(groups));
       })

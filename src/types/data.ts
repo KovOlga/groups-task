@@ -3,6 +3,12 @@ export interface GetGroupsResponse {
   data?: Group[];
 }
 
+export interface IFilterRequest {
+  isClosed: boolean | null;
+  color: string | null;
+  hasFriends: boolean | null;
+}
+
 export interface Group {
   id: number;
   name: string;

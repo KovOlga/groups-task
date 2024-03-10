@@ -1,28 +1,51 @@
-import { GetGroupsResponse, Group } from "../types/data";
+import { GetGroupsResponse, Group, IFilterRequest } from "../types/data";
 import mock from "../utils/groups.json";
 
-const mockFetch = (): Promise<GetGroupsResponse> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({ result: 1, data: mock });
-    }, 1000);
-  });
-};
+// const mockFetch = (): Promise<GetGroupsResponse> => {
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       resolve({ result: 1, data: mock });
+//     }, 1000);
+//   });
+// };
 //==>
 
-const mockFetchFiltered = (filterRequest: any): Promise<GetGroupsResponse> => {
+const mockFetchFiltered = (
+  filterReq: IFilterRequest
+): Promise<GetGroupsResponse> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(backendFiltersResultSet(filterRequest));
+      resolve(backendFiltersResultSet(filterReq));
     }, 1000);
   });
 };
 
-const backendFiltersResultSet = (filterRequest: any): GetGroupsResponse => {
-  if (filterRequest != null) {
-    return { result: 1, data: backendFiltersResultSet(filterRequest) };
+const backendFiltersResultSet = (
+  filterRequest: IFilterRequest
+): GetGroupsResponse => {
+  let resultSet = mock;
+  console.log("filterRequest", filterRequest);
+  if (filterRequest.isClosed !== null) {
+    console.log("null1");
+    resultSet = resultSet.filter(
+      (item) => item.closed === filterRequest.isClosed
+    );
   }
-  return { result: 1, data: backendFiltersResultSet(filterRequest) };
+  if (filterRequest.color) {
+    console.log("null2");
+    resultSet = resultSet.filter(
+      (item) => item.avatar_color === filterRequest.color
+    );
+  }
+  if (filterRequest.hasFriends !== null) {
+    console.log("null3");
+    resultSet = resultSet.filter(
+      (item) =>
+        (filterRequest.hasFriends && item.friends != null) ||
+        (!filterRequest.hasFriends && item.friends == null)
+    );
+  }
+  return { result: 1, data: resultSet };
 };
 
 const getResponse = async (req: GetGroupsResponse) => {
@@ -35,6 +58,6 @@ const getResponse = async (req: GetGroupsResponse) => {
   return Promise.reject();
 };
 
-export const getGroupsList = (): Promise<Group[]> => {
-  return mockFetch().then(getResponse);
+export const getGroupsList = (filReq: IFilterRequest): Promise<Group[]> => {
+  return mockFetchFiltered(filReq).then(getResponse);
 };
