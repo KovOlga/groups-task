@@ -13,18 +13,16 @@ const GroupItem: FC<Group> = (item) => {
     <CardGrid>
       <SimpleCell
         before={
-          item.avatar_color ? (
-            <Avatar
-              gradientColor={"custom"}
-              style={{ backgroundColor: `${item.avatar_color}` }}
-            />
-          ) : (
-            <Avatar
-              gradientColor={"custom"}
-              style={{ backgroundColor: "inherit" }}
-              noBorder
-            />
-          )
+          <Avatar
+            size={100}
+            gradientColor={"custom"}
+            style={{
+              backgroundColor: `${
+                item.avatar_color ? item.avatar_color : "inherit"
+              }`,
+            }}
+            noBorder={item.avatar_color ? false : true}
+          />
         }
         subtitle={`${item.members_count} подписчиков`}
         subhead={
