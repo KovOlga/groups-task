@@ -3,6 +3,7 @@ import {
   GET_GROUPS_FAILED,
   GET_GROUPS_REQUEST,
   GET_GROUPS_SUCCESS,
+  SET_AVATAR_COLORS,
   TGroupsActions,
 } from "./actions";
 
@@ -33,6 +34,14 @@ export const groupsReducer = (
       };
     }
     case GET_GROUPS_SUCCESS: {
+      return {
+        ...state,
+        reqInProccess: false,
+        reqFailed: false,
+        groups: action.groups,
+      };
+    }
+    case SET_AVATAR_COLORS: {
       const colorsArr: string[] = [];
       action.groups.forEach((group) => {
         if (group.avatar_color) {
@@ -44,9 +53,6 @@ export const groupsReducer = (
       });
       return {
         ...state,
-        reqInProccess: false,
-        reqFailed: false,
-        groups: action.groups,
         colors: uniqueArr,
       };
     }
