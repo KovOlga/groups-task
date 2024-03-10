@@ -60,7 +60,8 @@ export const getGroups: AppThunk = (filterReq: IFilterRequest) => {
       .then((groups) => {
         dispatch(getGroupsSuccessAction(groups));
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log("error in getGroups", err);
         dispatch(getGroupsFailedAction());
       });
   };

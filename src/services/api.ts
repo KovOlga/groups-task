@@ -15,14 +15,16 @@ export const getGroupsList = (filterReq: IFilterRequest): Promise<Group[]> => {
 };
 
 const parseGroupsResponse = async (req: GetGroupsResponse) => {
-  if (!req.data) {
-    console.log(`Отсутствует дата`);
-    // todo: add exception handling
-  }
   if (req.data && req.result) {
     return req.data;
   }
-  return Promise.reject();
+  if (!req.data) {
+    return Promise.reject("Отсутствуют данные");
+  }
+  if (!req.result) {
+    return Promise.reject("Result вернул 0");
+  }
+  return Promise.reject("метод упал :(");
 };
 
 export const getFiltersOptions = (): Promise<IFilterOptions> => {
@@ -30,12 +32,14 @@ export const getFiltersOptions = (): Promise<IFilterOptions> => {
 };
 
 const parseFilterOptionsResponse = async (req: IGetFilterOptionsResponse) => {
-  if (!req.data) {
-    console.log(`Отсутствует дата`);
-    // todo: add exception handling
-  }
   if (req.data && req.result) {
     return req.data;
   }
-  return Promise.reject();
+  if (!req.data) {
+    return Promise.reject("Отсутствуют данные");
+  }
+  if (!req.result) {
+    return Promise.reject("Result вернул 0");
+  }
+  return Promise.reject("метод упал :(");
 };

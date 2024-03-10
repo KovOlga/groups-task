@@ -1,4 +1,4 @@
-import { List, Spinner } from "@vkontakte/vkui";
+import { Div, List, Spinner } from "@vkontakte/vkui";
 import { FC, useEffect } from "react";
 import GroupItem from "../group-item/group-item";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
@@ -11,6 +11,7 @@ const GroupsList: FC = () => {
   const loading = useAppSelector(
     (store: RootState) => store.groups.reqInProccess
   );
+  const error = useAppSelector((store: RootState) => store.groups.reqFailed);
   useEffect(() => {
     dispatch(
       getGroups({
@@ -25,10 +26,16 @@ const GroupsList: FC = () => {
       {loading && !groups.length && (
         <Spinner size="large" style={{ margin: "20px 0" }} />
       )}
-      {groups &&
+      {!loading && !error && groups.length === 0 && (
+        <Div>Подходящих групп нет</Div>
+      )}
+      {groups.length > 0 &&
+        !loading &&
+        !error &&
         groups.map((item) => {
           return <GroupItem key={item.id} {...item} />;
         })}
+      {error && <Div>Произошла ошибка. Здесь должна быть ее обработка</Div>}
     </List>
   );
 };
