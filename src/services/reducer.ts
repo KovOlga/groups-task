@@ -30,6 +30,7 @@ export const groupsReducer = (
       return {
         ...state,
         reqInProccess: true,
+        groups: [],
         reqFailed: false,
       };
     }

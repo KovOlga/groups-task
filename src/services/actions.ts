@@ -72,6 +72,8 @@ export const getFilterOptions: AppThunk = () => {
       .then((filters) => {
         dispatch(setFiltersAction(filters));
       })
-      .catch(() => {});
+      .catch(() => {
+        console.log("ошибка при загрузке опций фильтров");
+      });
   };
 };
