@@ -3,6 +3,15 @@ export interface GetGroupsResponse {
   data?: Group[];
 }
 
+export interface IGetFilterOptionsResponse {
+  result: 1 | 0;
+  data?: IFilterOptions;
+}
+
+export interface IFilterOptions {
+  colors: string[];
+}
+
 export interface IFilterRequest {
   isClosed: boolean | null;
   color: string | null;

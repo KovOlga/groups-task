@@ -1,11 +1,11 @@
 import { AppDispatch, AppThunk } from "../types";
-import { Group, IFilterRequest } from "../types/data";
-import { getGroupsList } from "./api";
+import { Group, IFilterOptions, IFilterRequest } from "../types/data";
+import { getFiltersOptions, getGroupsList } from "./api";
 
 export const GET_GROUPS_REQUEST = "GET_GROUPS_REQUEST";
 export const GET_GROUPS_SUCCESS = "GET_GROUPS_SUCCESS";
 export const GET_GROUPS_FAILED = "GET_GROUPS_FAILED";
-export const SET_AVATAR_COLORS = "SET_AVATAR_COLORS";
+export const SET_FILTERS = "SET_FILTERS";
 
 interface IGetGroupsRequestAction {
   readonly type: typeof GET_GROUPS_REQUEST;
@@ -20,16 +20,16 @@ interface IGetGroupsFailedAction {
   readonly type: typeof GET_GROUPS_FAILED;
 }
 
-interface ISetAvatarColorsAction {
-  readonly type: typeof SET_AVATAR_COLORS;
-  groups: Group[];
+interface ISetFiltersAction {
+  readonly type: typeof SET_FILTERS;
+  filters: IFilterOptions;
 }
 
 export type TGroupsActions =
   | IGetGroupsRequestAction
   | IGetGroupsSuccessAction
   | IGetGroupsFailedAction
-  | ISetAvatarColorsAction;
+  | ISetFiltersAction;
 
 export const getGroupsRequestAction = (): IGetGroupsRequestAction => ({
   type: GET_GROUPS_REQUEST,
@@ -42,15 +42,15 @@ export const getGroupsSuccessAction = (
   groups,
 });
 
-export const setAvatarColorsAction = (
-  groups: Group[]
-): ISetAvatarColorsAction => ({
-  type: SET_AVATAR_COLORS,
-  groups,
-});
-
 export const getGroupsFailedAction = (): IGetGroupsFailedAction => ({
   type: GET_GROUPS_FAILED,
+});
+
+export const setFiltersAction = (
+  filters: IFilterOptions
+): ISetFiltersAction => ({
+  type: SET_FILTERS,
+  filters,
 });
 
 export const getGroups: AppThunk = (filterReq: IFilterRequest) => {
@@ -66,16 +66,12 @@ export const getGroups: AppThunk = (filterReq: IFilterRequest) => {
   };
 };
 
-export const getGroupsInitial: AppThunk = (filterReq: IFilterRequest) => {
+export const getFilterOptions: AppThunk = () => {
   return function (dispatch: AppDispatch) {
-    dispatch(getGroupsRequestAction());
-    return getGroupsList(filterReq)
-      .then((groups) => {
-        dispatch(getGroupsSuccessAction(groups));
-        dispatch(setAvatarColorsAction(groups));
+    return getFiltersOptions()
+      .then((filters) => {
+        dispatch(setFiltersAction(filters));
       })
-      .catch(() => {
-        dispatch(getGroupsFailedAction());
-      });
+      .catch(() => {});
   };
 };

@@ -3,20 +3,20 @@ import {
   GET_GROUPS_FAILED,
   GET_GROUPS_REQUEST,
   GET_GROUPS_SUCCESS,
-  SET_AVATAR_COLORS,
+  SET_FILTERS,
   TGroupsActions,
 } from "./actions";
 
 export interface IInitialState {
   groups: Group[];
-  colors: string[];
+  colorsOptions: string[];
   reqInProccess: boolean;
   reqFailed: boolean;
 }
 
 const initialState: IInitialState = {
   groups: [],
-  colors: [],
+  colorsOptions: [],
   reqInProccess: false,
   reqFailed: false,
 };
@@ -41,19 +41,10 @@ export const groupsReducer = (
         groups: action.groups,
       };
     }
-    case SET_AVATAR_COLORS: {
-      const colorsArr: string[] = [];
-      action.groups.forEach((group) => {
-        if (group.avatar_color) {
-          colorsArr.push(group.avatar_color);
-        }
-      });
-      const uniqueArr = colorsArr.filter((value, index, array) => {
-        return array.indexOf(value) === index;
-      });
+    case SET_FILTERS: {
       return {
         ...state,
-        colors: uniqueArr,
+        colorsOptions: action.filters.colors,
       };
     }
     case GET_GROUPS_FAILED: {

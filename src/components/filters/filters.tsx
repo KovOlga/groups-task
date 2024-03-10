@@ -5,20 +5,27 @@ import {
   FormLayoutGroup,
   NativeSelect,
 } from "@vkontakte/vkui";
-import { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { RootState } from "../../types";
-import { getGroups } from "../../services/actions";
+import { getFilterOptions, getGroups } from "../../services/actions";
 import { parseHasFriends, parseIsClosed } from "../../utils/parse-filters";
 
 const Filters: FC = () => {
   const dispatch = useAppDispatch();
-  const colors = useAppSelector((store: RootState) => store.groups.colors);
   const [filtersValues, setFiltersValues] = useState({
     privacy: "all",
     color: "any",
     friends: "all",
   });
+  const colors = useAppSelector(
+    (store: RootState) => store.groups.colorsOptions
+  );
+
+  useEffect(() => {
+    dispatch(getFilterOptions());
+  }, []);
+
   const onFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setFiltersValues({ ...filtersValues, [e.target.id]: e.target.value });
   };
