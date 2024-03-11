@@ -27,7 +27,7 @@ const Filters: FC = () => {
   }, []);
 
   const onFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setFiltersValues({ ...filtersValues, [e.target.id]: e.target.value });
+    setFiltersValues({ ...filtersValues, [e.target.name]: e.target.value });
   };
   const handleApplyFilters = () => {
     dispatch(
@@ -42,14 +42,14 @@ const Filters: FC = () => {
     <>
       <FormLayoutGroup mode="horizontal">
         <FormItem top="По типу приватности" htmlFor="privacy">
-          <NativeSelect onChange={onFilterChange} id="privacy">
+          <NativeSelect name="privacy" onChange={onFilterChange} id="privacy">
             <option value="all">Все</option>
             <option value="closed">Закрытая</option>
             <option value="opened">Открытая</option>
           </NativeSelect>
         </FormItem>
         <FormItem top="По цвету аватарки" htmlFor="color">
-          <NativeSelect onChange={onFilterChange} id="color">
+          <NativeSelect name="color" onChange={onFilterChange} id="color">
             <option value="any">Любой</option>
             {colors.map((color, index) => {
               return (
@@ -61,7 +61,7 @@ const Filters: FC = () => {
           </NativeSelect>
         </FormItem>
         <FormItem top="По наличию друзей в группе" htmlFor="friends">
-          <NativeSelect onChange={onFilterChange} id="friends">
+          <NativeSelect name="friends" onChange={onFilterChange} id="friends">
             <option value="all">Все</option>
             <option value="present">Есть друзья в группе</option>
             <option value="absent">Нет друзей в группе</option>

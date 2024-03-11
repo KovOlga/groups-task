@@ -36,7 +36,7 @@ const parseFilterOptionsResponse = async (req: IGetFilterOptionsResponse) => {
     return req.data;
   }
   if (!req.data) {
-    return Promise.reject("Отсутствуют данные");
+    return Promise.reject("Фильтры не загрузились");
   }
   if (!req.result) {
     return Promise.reject("Result вернул 0");

@@ -24,12 +24,8 @@ const GroupItem: FC<Group> = (item) => {
             noBorder={item.avatar_color ? false : true}
           />
         }
-        subtitle={`${item.members_count} подписчиков`}
-        subhead={
-          <Title style={{ color: "#d1deeb" }} level="1">
-            {item.name}
-          </Title>
-        }
+        subtitle={`Подписчиков: ${item.members_count}`}
+        subhead={<Title level="1">{item.name}</Title>}
         indicator={
           item.friends &&
           item.friends?.length > 0 && (

@@ -4,7 +4,6 @@ export const parseIsClosed = (type: string) => {
       return null;
     case "closed":
       return true;
-
     case "opened":
       return false;
   }
@@ -16,7 +15,6 @@ export const parseHasFriends = (type: string) => {
       return null;
     case "present":
       return true;
-
     case "absent":
       return false;
   }
