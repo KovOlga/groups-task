@@ -26,20 +26,18 @@ const GroupItem: FC<Group> = (item) => {
             noBorder={item.avatar_color ? false : true}
           />
         }
-        subhead={<Title level="1">{item.name}</Title>}
+        subhead={item.closed ? "Закрытая" : "Открытая"}
         subtitle={`Подписчиков: ${item.members_count}`}
         indicator={
           item.friends &&
-          item.friends?.length > 0 && (
+          item.friends.length > 0 && (
             <Button size="s" mode="tertiary" onClick={onFriendsClick}>
               {`Друзей подписано: ${item.friends?.length}`}
             </Button>
           )
         }
       >
-        <Title style={{ color: "var(--vkui--color_text_secondary)" }} level="3">
-          {item.closed ? "Закрытая" : "Открытая"}
-        </Title>
+        <Title level="1">{item.name}</Title>
       </SimpleCell>
       {isFriendsListVisible && item.friends && (
         <FriendsList friends={item.friends} />
