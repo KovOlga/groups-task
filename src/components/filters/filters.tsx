@@ -11,9 +11,15 @@ import { RootState } from "../../types";
 import { getFilterOptions, getGroups } from "../../services/actions";
 import { parseHasFriends, parseIsClosed } from "../../utils/parse-filters";
 
+interface IFiltersState {
+  privacy: string;
+  color: string;
+  friends: string;
+}
+
 const Filters: FC = () => {
   const dispatch = useAppDispatch();
-  const [filtersValues, setFiltersValues] = useState({
+  const [filtersValues, setFiltersValues] = useState<IFiltersState>({
     privacy: "all",
     color: "any",
     friends: "all",
@@ -29,6 +35,7 @@ const Filters: FC = () => {
   const onFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setFiltersValues({ ...filtersValues, [e.target.name]: e.target.value });
   };
+
   const handleApplyFilters = () => {
     dispatch(
       getGroups({
@@ -38,6 +45,7 @@ const Filters: FC = () => {
       })
     );
   };
+
   return (
     <>
       <FormLayoutGroup mode="horizontal">
@@ -51,13 +59,14 @@ const Filters: FC = () => {
         <FormItem top="По цвету аватарки" htmlFor="color">
           <NativeSelect name="color" onChange={onFilterChange} id="color">
             <option value="any">Любой</option>
-            {colors.map((color, index) => {
-              return (
-                <option key={index} value={color}>
-                  {color}
-                </option>
-              );
-            })}
+            {colors &&
+              colors.map((color, index) => {
+                return (
+                  <option key={index} value={color}>
+                    {color}
+                  </option>
+                );
+              })}
           </NativeSelect>
         </FormItem>
         <FormItem top="По наличию друзей в группе" htmlFor="friends">

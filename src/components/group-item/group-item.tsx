@@ -6,9 +6,11 @@ import { Group } from "../../types/data";
 const GroupItem: FC<Group> = (item) => {
   const [isFriendsListVisible, setIsFriendsListVisible] =
     useState<boolean>(false);
+
   const onFriendsClick = () => {
     setIsFriendsListVisible((prevState) => !prevState);
   };
+
   return (
     <CardGrid>
       <SimpleCell
@@ -24,8 +26,8 @@ const GroupItem: FC<Group> = (item) => {
             noBorder={item.avatar_color ? false : true}
           />
         }
-        subtitle={`Подписчиков: ${item.members_count}`}
         subhead={<Title level="1">{item.name}</Title>}
+        subtitle={`Подписчиков: ${item.members_count}`}
         indicator={
           item.friends &&
           item.friends?.length > 0 && (

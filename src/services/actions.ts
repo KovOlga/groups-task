@@ -7,48 +7,44 @@ export const GET_GROUPS_SUCCESS = "GET_GROUPS_SUCCESS";
 export const GET_GROUPS_FAILED = "GET_GROUPS_FAILED";
 export const SET_FILTERS = "SET_FILTERS";
 
-interface IGetGroupsRequestAction {
+interface IGetGroupsRequest {
   readonly type: typeof GET_GROUPS_REQUEST;
 }
 
-interface IGetGroupsSuccessAction {
+interface IGetGroupsSuccess {
   readonly type: typeof GET_GROUPS_SUCCESS;
   groups: Group[];
 }
 
-interface IGetGroupsFailedAction {
+interface IGetGroupsFailed {
   readonly type: typeof GET_GROUPS_FAILED;
 }
 
-interface ISetFiltersAction {
+interface ISetFilters {
   readonly type: typeof SET_FILTERS;
   filters: IFilterOptions;
 }
 
 export type TGroupsActions =
-  | IGetGroupsRequestAction
-  | IGetGroupsSuccessAction
-  | IGetGroupsFailedAction
-  | ISetFiltersAction;
+  | IGetGroupsRequest
+  | IGetGroupsSuccess
+  | IGetGroupsFailed
+  | ISetFilters;
 
-export const getGroupsRequestAction = (): IGetGroupsRequestAction => ({
+export const getGroupsRequestAction = (): IGetGroupsRequest => ({
   type: GET_GROUPS_REQUEST,
 });
 
-export const getGroupsSuccessAction = (
-  groups: Group[]
-): IGetGroupsSuccessAction => ({
+export const getGroupsSuccessAction = (groups: Group[]): IGetGroupsSuccess => ({
   type: GET_GROUPS_SUCCESS,
   groups,
 });
 
-export const getGroupsFailedAction = (): IGetGroupsFailedAction => ({
+export const getGroupsFailedAction = (): IGetGroupsFailed => ({
   type: GET_GROUPS_FAILED,
 });
 
-export const setFiltersAction = (
-  filters: IFilterOptions
-): ISetFiltersAction => ({
+export const setFiltersAction = (filters: IFilterOptions): ISetFilters => ({
   type: SET_FILTERS,
   filters,
 });
@@ -61,7 +57,7 @@ export const getGroups: AppThunk = (filterReq: IFilterRequest) => {
         dispatch(getGroupsSuccessAction(groups));
       })
       .catch((err) => {
-        console.log("error in getGroups", err);
+        console.log("ошибка при получении групп:", err);
         dispatch(getGroupsFailedAction());
       });
   };
@@ -73,8 +69,8 @@ export const getFilterOptions: AppThunk = () => {
       .then((filters) => {
         dispatch(setFiltersAction(filters));
       })
-      .catch(() => {
-        console.log("ошибка при загрузке опций фильтров");
+      .catch((err) => {
+        console.log("ошибка при загрузке опций фильтров", err);
       });
   };
 };

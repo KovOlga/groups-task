@@ -12,6 +12,7 @@ const GroupsList: FC = () => {
     (store: RootState) => store.groups.reqInProccess
   );
   const error = useAppSelector((store: RootState) => store.groups.reqFailed);
+
   useEffect(() => {
     dispatch(
       getGroups({
@@ -21,6 +22,7 @@ const GroupsList: FC = () => {
       })
     );
   }, []);
+
   return (
     <List>
       {loading && !groups.length && (
@@ -29,13 +31,18 @@ const GroupsList: FC = () => {
       {!loading && !error && groups.length === 0 && (
         <Div>Подходящих групп нет</Div>
       )}
-      {groups.length > 0 &&
-        !loading &&
+      {!loading &&
         !error &&
+        groups.length > 0 &&
         groups.map((item) => {
           return <GroupItem key={item.id} {...item} />;
         })}
-      {error && <Div>Произошла ошибка. Здесь должна быть ее обработка</Div>}
+      {error && (
+        <Div>
+          Произошла ошибка. Здесь должна быть ее обработка. Пока проверьте
+          консоль
+        </Div>
+      )}
     </List>
   );
 };
