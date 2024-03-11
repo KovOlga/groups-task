@@ -19,7 +19,6 @@ const mockBackendFiltersResultSet = (
   filterRequest: IFilterRequest
 ): GetGroupsResponse => {
   let resultSet = mock;
-  console.log("filterRequest", filterRequest);
   if (filterRequest.isClosed !== null) {
     resultSet = resultSet.filter(
       (item) => item.closed === filterRequest.isClosed
